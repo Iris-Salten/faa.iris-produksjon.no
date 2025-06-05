@@ -1,0 +1,16 @@
+export type AdrKlasser =
+  | 'BrannfarligeVaesker'
+  | 'RadioaktivtMateriale'
+  | 'EtsendeStoffer'
+  | 'ForskjelligeFarligeStofferOgGjenstander'
+  | 'MiljoefarligeStoffer'
+  | 'BrannfarligeGasser'
+  | 'IkkeBrannfarligeGasserIkkeGiftigeGasser'
+  | 'GiftigeGasser'
+  | 'BrannfarligeFasteStofferOgAndre'
+  | 'SelvantennendeStoffer'
+  | 'StofferSomUtviklerBrennbareGasserIKontaktMedVann'
+  | 'OksiderendeStoffer'
+  | 'OrganiskePeroksider'
+  | 'GiftigeStoffer'
+  | 'ForskjelligeFarligeStofferOgGjenstanderBatterier';

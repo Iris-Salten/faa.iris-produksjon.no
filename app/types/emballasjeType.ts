@@ -1,0 +1,17 @@
+export type EmballasjeType =
+  | 'SmaaPakker'
+  | 'Toenne'
+  | 'ToenneMedSmaaPakker'
+  | 'Tank'
+  | 'IBC'
+  | 'IBCMedSmaaPakker'
+  | 'Container'
+  | 'BeholderMedSmaaPakker'
+  | 'BigBag'
+  | 'BigBagMedSmaaPakker'
+  | 'Pall'
+  | 'PallMedSmaaPakker'
+  | 'Bensintank'
+  | 'BulkBil'
+  | 'BulkBaatEllerSkip'
+  | 'AndreTyperEmballasje';
