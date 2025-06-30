@@ -11,7 +11,17 @@ export class Deklarasjoner {
       .then((response) => response.data);
   }
 
-  public static async getByUid(uid: string) {
+  public static async getByUid(
+    uid: string,
+    version: string,
+  ): Promise<DeklarasjonDto> {
+    console.log(
+      process.env.API_BASE_URL +
+        '/deklarasjoner/' +
+        uid +
+        '?versjon=' +
+        version,
+    );
     return await axios
       .get(process.env.API_BASE_URL + '/deklarasjoner/' + uid, {
         headers: {

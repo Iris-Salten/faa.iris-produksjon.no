@@ -11,10 +11,26 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+import { Inter } from 'next/font/google';
+import Header from './components/header';
+const inter = Inter({ subsets: ['latin'] });
+
 export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body
+        className={`${inter.className} antialiased flex w-full h-[calc(100dvh)]`}
+      >
+        <main className="flex flex-col w-full h-full">
+          <Header />
+
+          <div className="flex w-full h-full">
+            {/* {sidebar} */}
+
+            {children}
+          </div>
+        </main>
+      </body>
     </html>
   );
 }
