@@ -13,6 +13,7 @@ interface LayoutProps {
 
 import { Inter } from 'next/font/google';
 import Header from './components/header';
+import { DefaultProviders } from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: LayoutProps) {
@@ -21,15 +22,17 @@ export default function RootLayout({ children }: LayoutProps) {
       <body
         className={`${inter.className} antialiased flex w-full h-[calc(100dvh)]`}
       >
-        <main className="flex flex-col w-full h-full">
-          <Header />
+        <DefaultProviders>
+          <main className="flex flex-col w-full h-full">
+            {/* <Header /> */}
 
-          <div className="flex w-full h-full">
-            {/* {sidebar} */}
+            <div className="flex w-full h-full">
+              {/* {sidebar} */}
 
-            {children}
-          </div>
-        </main>
+              {children}
+            </div>
+          </main>
+        </DefaultProviders>
       </body>
     </html>
   );

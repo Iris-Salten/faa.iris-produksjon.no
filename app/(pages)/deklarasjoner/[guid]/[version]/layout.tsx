@@ -1,5 +1,7 @@
 'use client';
 
+import ScrollView from '@/app/components/scrollView';
+
 import { BreadcrumbItem, Breadcrumbs } from '@heroui/react';
 import { useParams } from 'next/navigation';
 
@@ -8,21 +10,21 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ header, children }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   const { guid } = useParams();
 
   return (
-    <main className="flex w-full h-full items-center justify-center overflow-y-auto py-5">
-      <article className="flex flex-col max-w-[1200px] w-full h-full gap-3">
-        <Breadcrumbs>
-          <BreadcrumbItem>Deklarasjoner</BreadcrumbItem>
-          <BreadcrumbItem>{guid}</BreadcrumbItem>
-        </Breadcrumbs>
+    <ScrollView width={1200} className={'p-5'}>
+      <Breadcrumbs>
+        <BreadcrumbItem>Deklarasjoner</BreadcrumbItem>
+        <BreadcrumbItem>{guid}</BreadcrumbItem>
+      </Breadcrumbs>
 
-        {header}
+      <span className="flex w-full items-center justify-between">
+        <h1 className="font-semibold text-2xl">Se deklarasjon</h1>
+      </span>
 
-        {children}
-      </article>
-    </main>
+      {children}
+    </ScrollView>
   );
 }

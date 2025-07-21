@@ -35,3 +35,7 @@ body {
 table {
   width: 100%;
 }
+
+thead {
+  font-weight: 500;
+}
