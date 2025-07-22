@@ -1,6 +1,8 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { DefaultProviders } from './providers';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -11,9 +13,6 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-import { Inter } from 'next/font/google';
-import Header from './components/header';
-import { DefaultProviders } from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: LayoutProps) {
@@ -24,13 +23,7 @@ export default function RootLayout({ children }: LayoutProps) {
       >
         <DefaultProviders>
           <main className="flex flex-col w-full h-full">
-            {/* <Header /> */}
-
-            <div className="flex w-full h-full">
-              {/* {sidebar} */}
-
-              {children}
-            </div>
+            <div className="flex w-full h-full">{children}</div>
           </main>
         </DefaultProviders>
       </body>

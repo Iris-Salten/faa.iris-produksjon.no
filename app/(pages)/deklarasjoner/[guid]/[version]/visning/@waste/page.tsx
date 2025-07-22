@@ -17,23 +17,28 @@ export default function Waste() {
       <AccordionField
         title="Avfallsstoffnummer"
         value={
+          data?.avfall?.farligAvfallsstoffnummer &&
           data?.avfall?.farligAvfallsstoffnummer?.kode +
-          ' ' +
-          data?.avfall?.farligAvfallsstoffnummer?.navn
+            ' ' +
+            data?.avfall?.farligAvfallsstoffnummer?.navn
         }
       />
 
       <AccordionField
         title="EAL-kode"
-        value={data?.avfall?.eal?.kode + ' ' + data?.avfall?.eal?.navn}
+        value={
+          data?.avfall?.eal &&
+          data?.avfall?.eal?.kode + ' ' + data?.avfall?.eal?.navn
+        }
       />
 
       <AccordionField
         title="EAL-kapittel"
         value={
+          data?.avfall?.eal?.parent &&
           data?.avfall?.eal?.parent?.kode +
-          ' ' +
-          data?.avfall?.eal?.parent?.navn
+            ' ' +
+            data?.avfall?.eal?.parent?.navn
         }
       />
     </>

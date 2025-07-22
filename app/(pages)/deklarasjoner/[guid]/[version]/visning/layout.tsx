@@ -11,6 +11,8 @@ interface LayoutProps {
   origin: React.ReactNode;
   amount: React.ReactNode;
   properties: React.ReactNode;
+  classifications: React.ReactNode;
+  transport: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -28,6 +30,8 @@ export default function Layout({
   origin,
   amount,
   properties,
+  classifications,
+  transport,
   children,
 }: LayoutProps) {
   const { guid, version } = useParams();
@@ -49,6 +53,7 @@ export default function Layout({
         className="px-0"
         selectionMode="multiple"
         variant="splitted"
+        defaultExpandedKeys={['1', '2', '3', '4', '5', '6', '7']}
         itemClasses={{
           title: 'font-medium',
           content: 'gap-4 flex flex-col border-gray-400',
@@ -70,6 +75,12 @@ export default function Layout({
         </AccordionItem>
         <AccordionItem key="5" title="Egenskaper">
           {properties}
+        </AccordionItem>
+        <AccordionItem key="6" title="Transportklassifisering">
+          {classifications}
+        </AccordionItem>
+        <AccordionItem key="7" title="Avfallsmottak og transportør">
+          {transport}
         </AccordionItem>
       </Accordion>
     </Context.Provider>
