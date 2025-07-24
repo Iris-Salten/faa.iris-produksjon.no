@@ -10,18 +10,20 @@ export const metadata: Metadata = {
 };
 
 interface LayoutProps {
+  modals: React.ReactNode;
   children: React.ReactNode;
 }
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function RootLayout({ children }: LayoutProps) {
+export default function RootLayout({ modals, children }: LayoutProps) {
   return (
     <html lang="en">
       <body
         className={`${inter.className} antialiased flex w-full h-[calc(100dvh)]`}
       >
         <DefaultProviders>
+          {modals}
           <main className="flex flex-col w-full h-full">
             <div className="flex w-full h-full">{children}</div>
           </main>

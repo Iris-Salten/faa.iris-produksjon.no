@@ -26,10 +26,17 @@ export default function Page() {
             .join('.')}
         </p>
       </div>
-      <div className="flex flex-col">
-        <p className="font-medium">Produsent</p>
-        <p>{data?.eidAv?.organisasjon?.navn}</p>
-      </div>
+      {data?.eidAv?.anlegg?.forvaltetAv ? (
+        <div className="flex flex-col">
+          <p className="font-medium">Mottak</p>
+          <p>{data?.eidAv?.anlegg?.forvaltetAv?.navn}</p>
+        </div>
+      ) : (
+        <div className="flex flex-col">
+          <p className="font-medium">Produsent</p>
+          <p>{data?.eidAv?.organisasjon?.navn}</p>
+        </div>
+      )}
       <div className="flex flex-col">
         <p className="font-medium">Avfallsstoffnummer</p>
         <p>{data?.avfall?.farligAvfallsstoffnummer?.kode || '-'}</p>

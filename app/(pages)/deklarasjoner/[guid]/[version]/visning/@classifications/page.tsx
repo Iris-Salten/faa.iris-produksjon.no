@@ -84,7 +84,10 @@ export default function Classifications() {
         title="Transportklassifisering"
         value={data?.transport?.typer?.map((type) => Types[type]).join(', ')}
       />
-      <AccordionField title="UN-nummer" value={data?.transport?.unNummer} />
+      <AccordionField
+        title="UN-nummer"
+        value={data?.transport?.unNummer || undefined}
+      />
       <AccordionField
         title="ADR-klassifisering"
         value={
@@ -100,6 +103,7 @@ export default function Classifications() {
                   <span>{'Klasse ' + Class.classNr + ' - ' + Class.name}</span>
                   <Image
                     alt={klassifisering}
+                    loading="eager"
                     src={
                       `https://avfallsdeklarering-staging.miljodirektoratet.no/images/pictograms/` +
                       klassifisering +
@@ -118,7 +122,11 @@ export default function Classifications() {
       />
       <AccordionField
         title="Emballasjegruppe"
-        value={data?.transport?.pakkegruppe}
+        value={
+          data?.transport?.pakkegruppe === 'None'
+            ? 'Ingen'
+            : data?.transport?.pakkegruppe
+        }
       />
     </>
   );

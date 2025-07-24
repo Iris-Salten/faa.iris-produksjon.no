@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { createContext } from 'react';
-import { Accordion, AccordionItem } from '@heroui/react';
+import { Accordion, AccordionItem, Spinner } from '@heroui/react';
 import { useParams } from 'next/navigation';
 
 interface LayoutProps {
@@ -36,14 +36,25 @@ export default function Layout({
 }: LayoutProps) {
   const { guid, version } = useParams();
 
-  const { data } = useQuery<DeklarasjonDto & KolliResponse>({
+  const { data, isFetching, isRefetching } = useQuery<
+    DeklarasjonDto & KolliResponse
+  >({
     queryKey: ['deklarasjon', guid, version],
+    staleTime: 1000 * 60 * 0.5,
     queryFn: async () => {
       return await fetch(`/api/deklarasjoner/${guid}/${version}`).then((res) =>
         res.json(),
       );
     },
   });
+
+  if (isFetching || isRefetching) {
+    return (
+      <div className="flex w-full shrink-0 h-[400px] items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <Context.Provider value={data}>

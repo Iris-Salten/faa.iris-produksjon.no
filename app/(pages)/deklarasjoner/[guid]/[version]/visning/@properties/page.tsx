@@ -61,7 +61,9 @@ export default function Properties() {
       />
       <AccordionField
         title="Flammepunkt i C°"
-        value={data?.avfall?.flammepunkt + ' ' + '°C'}
+        value={
+          data?.avfall?.flammepunkt && data?.avfall?.flammepunkt + ' ' + '°C'
+        }
       />
       <AccordionField
         title="Nærmere beskrivelser"
