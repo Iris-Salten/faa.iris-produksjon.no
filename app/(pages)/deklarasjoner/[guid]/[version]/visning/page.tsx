@@ -13,9 +13,10 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Page() {
+  const data = useContext(Context);
+
   const router = useRouter();
   const searchParams = useSearchParams();
-  const data = useContext(Context);
 
   return (
     <>
