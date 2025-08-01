@@ -12,9 +12,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
 export default function HistoryModal() {
-  const { guid, version } = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { guid, version } = useParams();
 
   const isOpen =
     searchParams.get('action') === 'view' &&
@@ -28,13 +28,17 @@ export default function HistoryModal() {
     router.push('?' + _params);
   };
 
-  const { data, isFetching, isRefetching } = useQuery<StatusHistorikkDto[]>({
+  const { data, error, failureCount, isFetching, isRefetching } = useQuery<
+    StatusHistorikkDto[]
+  >({
     queryKey: ['history', guid],
     staleTime: 1000 * 60 * 0.5,
     enabled: isOpen,
     queryFn: async () => {
       return await fetch(
-        '/api/deklarasjoner/' + guid + '/' + version + '/history',
+        '/api/deklarasjoner/' + guid ||
+          searchParams.get('guid') + '/' + version ||
+          searchParams.get('version') + '/history',
       ).then((res) => res.json());
     },
   });
@@ -49,9 +53,25 @@ export default function HistoryModal() {
       <ModalContent>
         <ModalHeader>Historikk</ModalHeader>
         <ModalBody>
+          {error && (
+            <div className="flex flex-col w-full items-center gap-15">
+              <img
+                className="h-[225px] flex pt-4"
+                src="/svg/undraw_timeline_2gfy.svg"
+              />
+              <p className="text-sm text-red-500">
+                En feil har oppstått ved henting av deklarasjonens historikk.
+              </p>
+            </div>
+          )}
           {isFetching || isRefetching ? (
-            <div className="flex w-full h-[300px] shrink-0 items-center justify-center">
+            <div className="flex flex-col gap-8 w-full h-[300px] shrink-0 items-center justify-center">
               <Spinner />
+              {failureCount > 0 && (
+                <p className="text-xs">
+                  Prøver igjen... ({failureCount} mislykkede forsøk)
+                </p>
+              )}
             </div>
           ) : (
             <Timeline className="pb-5">

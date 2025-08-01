@@ -82,17 +82,31 @@ export default function Classifications() {
     <>
       <AccordionField
         title="Transportklassifisering"
-        value={data?.transport?.typer?.map((type) => Types[type]).join(', ')}
+        value={
+          data?.transport?.typer === data?.korreksjon?.transport?.typer
+            ? data?.transport?.typer?.map((type) => Types[type]).join(', ')
+            : data?.korreksjon?.transport?.typer
+                ?.map((type) => Types[type])
+                .join(', ')
+        }
       />
       <AccordionField
         title="UN-nummer"
-        value={data?.transport?.unNummer || undefined}
+        value={
+          data?.transport?.unNummer === data?.korreksjon?.transport?.unNummer
+            ? data?.transport?.unNummer
+            : data?.korreksjon?.transport?.unNummer
+        }
       />
       <AccordionField
         title="ADR-klassifisering"
         value={
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {data?.transport?.adrKlasser?.map((klassifisering) => {
+            {(data?.transport?.adrKlasser ===
+            data?.korreksjon?.transport?.adrKlasser
+              ? data?.transport?.adrKlasser
+              : data?.korreksjon?.transport?.adrKlasser
+            )?.map((klassifisering) => {
               const Class = Classes[klassifisering];
 
               return (
@@ -122,10 +136,93 @@ export default function Classifications() {
       />
       <AccordionField
         title="Emballasjegruppe"
+        value={(() => {
+          const selectedPakkegruppe =
+            data?.transport?.pakkegruppe ===
+            data?.korreksjon?.transport?.pakkegruppe
+              ? data?.transport?.pakkegruppe
+              : data?.korreksjon?.transport?.pakkegruppe;
+          return selectedPakkegruppe === 'None' ? 'Ingen' : selectedPakkegruppe;
+        })()}
+        corrections={(() => {
+          const { id: transportId, ...transportRest } = data?.transport || {};
+          const { id: korreksjonId, ...korreksjonRest } =
+            data?.korreksjon?.transport || {};
+          const isChanged =
+            JSON.stringify(transportRest) !== JSON.stringify(korreksjonRest);
+
+          if (isChanged)
+            return [
+              {
+                key: 'Transportklassifisering',
+                value: data?.transport?.typer
+                  ?.map((type) => Types[type])
+                  .join(', '),
+              },
+              {
+                key: 'UN-nummer',
+                value: data?.transport?.unNummer || undefined,
+              },
+              {
+                key: 'ADR-klassifisering',
+                value: (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {data?.transport?.adrKlasser?.map((klassifisering) => {
+                      const Class = Classes[klassifisering];
+
+                      return (
+                        <div
+                          key={klassifisering}
+                          className="flex items-center justify-between"
+                        >
+                          <span>
+                            {'Klasse ' + Class.classNr + ' - ' + Class.name}
+                          </span>
+                          <Image
+                            alt={klassifisering}
+                            loading="eager"
+                            src={
+                              `https://avfallsdeklarering-staging.miljodirektoratet.no/images/pictograms/` +
+                              klassifisering +
+                              '.svg'
+                            }
+                            className="flex h-[75px] w-[75px] shrink-0 grow-0 aspect-square"
+                            draggable={false}
+                            width={150}
+                            height={150}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ),
+              },
+              {
+                key: 'Emballasjegruppe',
+                value:
+                  data?.transport?.pakkegruppe === 'None'
+                    ? 'Ingen'
+                    : data?.transport?.pakkegruppe,
+              },
+            ];
+        })()}
+      />
+      <AccordionField
+        title="Tilleggsopplysninger transport"
         value={
-          data?.transport?.pakkegruppe === 'None'
-            ? 'Ingen'
-            : data?.transport?.pakkegruppe
+          data?.transport?.kommentar === data?.korreksjon?.transport?.kommentar
+            ? data?.transport.kommentar
+            : data?.korreksjon?.transport?.kommentar
+        }
+        corrections={
+          data?.transport?.kommentar !== data?.korreksjon?.transport?.kommentar
+            ? [
+                {
+                  key: 'Tilleggsopplysninger transport',
+                  value: data?.transport?.kommentar,
+                },
+              ]
+            : []
         }
       />
     </>

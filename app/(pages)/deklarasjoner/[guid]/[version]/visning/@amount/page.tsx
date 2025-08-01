@@ -26,17 +26,45 @@ const KolliTypes: { [key: string]: { name: string } } = {
 export default function Amount() {
   const data = useContext(Context);
 
+  console.log(
+    JSON.stringify(data?.korreksjon?.kolli) !== JSON.stringify(data?.kolli),
+  );
+  console.log(data?.korreksjon?.kolli, data?.kolli);
+
   return (
     <>
       <AccordionField
         title="Mengde"
-        value={`${data?.mengdeBrutto} ${data?.maaleenhet}`}
+        value={
+          data?.korreksjon?.mengdeBrutto &&
+          data?.mengdeBrutto !== data?.korreksjon?.mengdeBrutto
+            ? `${data?.korreksjon?.mengdeBrutto} ${data?.maaleenhet}`
+            : `${data?.mengdeBrutto} ${data?.maaleenhet}`
+        }
+        corrections={
+          data?.korreksjon?.mengdeBrutto &&
+          data?.mengdeBrutto !== data?.korreksjon?.mengdeBrutto
+            ? [
+                {
+                  key: 'Mengde',
+                  value: data?.korreksjon?.mengdeBrutto
+                    ? `${data?.mengdeBrutto} ${data?.maaleenhet}`
+                    : undefined,
+                },
+              ]
+            : []
+        }
       />
 
       {data?.kolli && (
         <AccordionField
           title="Emballasjetype"
-          value={data?.kolli
+          value={(data?.korreksjon?.kolli === data?.kolli
+            ? data?.kolli
+            : data?.korreksjon?.kolli
+            ? data?.korreksjon?.kolli
+            : data?.kolli
+          )
             ?.map(
               (kolli) =>
                 KolliTypes[kolli.emballasje.emballasjetype]?.name +
@@ -49,17 +77,36 @@ export default function Amount() {
 
       <AccordionField
         title="Sum kolli"
-        value={data?.kolli?.reduce((acc, kolli) => acc + kolli.antallKolli, 0)}
-        endContent={
-          <div className="flex flex-col gap-4 w-full p-4 border-[1px] border-orange-500/40 bg-orange-500/10">
-            <p className="italic text-xs">Korrigert av mottak</p>
-            <span className="flex flex-col">
-              <p className="font-medium text-sm">Sum kolli</p>
-              <span className="p-4 border-b-[1px] border-gray-300 text-sm">
-                test123
-              </span>
-            </span>
-          </div>
+        value={(data?.korreksjon?.kolli === data?.kolli
+          ? data?.kolli
+          : data?.korreksjon?.kolli
+          ? data?.korreksjon?.kolli
+          : data?.kolli
+        )?.reduce((acc, kolli) => acc + kolli.antallKolli, 0)}
+        corrections={
+          JSON.stringify(data?.korreksjon?.kolli) !==
+          JSON.stringify(data?.kolli)
+            ? [
+                {
+                  key: 'Emballasjetype',
+                  value: data?.kolli
+                    ?.map(
+                      (kolli) =>
+                        KolliTypes[kolli.emballasje.emballasjetype]?.name +
+                        ': ' +
+                        kolli.antallKolli,
+                    )
+                    .join(', '),
+                },
+                {
+                  key: 'Sum kolli',
+                  value: data?.kolli?.reduce(
+                    (acc, kolli) => acc + kolli.antallKolli,
+                    0,
+                  ),
+                },
+              ]
+            : []
         }
       />
 

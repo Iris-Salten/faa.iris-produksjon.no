@@ -60,7 +60,16 @@ export default function Producer() {
         }
       />
 
-      <AccordionField title="Referanse" value={data?.referanse} />
+      <AccordionField
+        title="Referanse"
+        value={data?.korreksjon?.referanse}
+        corrections={
+          data?.referanse !== data?.korreksjon?.referanse &&
+          data?.korreksjon?.referanse !== undefined
+            ? [{ key: 'Referanse', value: data?.referanse }]
+            : []
+        }
+      />
     </>
   );
 }

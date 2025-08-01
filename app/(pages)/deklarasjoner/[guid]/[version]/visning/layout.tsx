@@ -18,6 +18,7 @@ interface LayoutProps {
 
 interface KolliResponse {
   kolli: TransportKolliDto[];
+  korreksjon?: (DeklarasjonDto & KolliResponse) | null;
 }
 
 export const Context = createContext<
@@ -40,7 +41,7 @@ export default function Layout({
     DeklarasjonDto & KolliResponse
   >({
     queryKey: ['deklarasjon', guid, version],
-    staleTime: 1000 * 60 * 0.5,
+    staleTime: 1000 * 60 * 5,
     queryFn: async () => {
       return await fetch(`/api/deklarasjoner/${guid}/${version}`).then((res) =>
         res.json(),
@@ -69,7 +70,7 @@ export default function Layout({
           title: 'font-medium',
           content: 'gap-4 flex flex-col border-gray-400',
           trigger: 'cursor-pointer',
-          base: 'bg-gray-50 rounded-xl shadow-none',
+          base: 'bg-white rounded-xl shadow-none',
         }}
       >
         <AccordionItem key="1" title="Produsent">

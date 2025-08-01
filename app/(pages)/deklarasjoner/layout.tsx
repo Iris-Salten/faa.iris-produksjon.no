@@ -3,17 +3,21 @@
 import ScrollView from '@/app/components/scrollView';
 
 interface LayoutProps {
-  header: React.ReactNode;
   breadcrumbs: React.ReactNode;
+  history: React.ReactNode;
   children: React.ReactNode;
 }
 
-export default function Layout({ header, breadcrumbs, children }: LayoutProps) {
+export default function Layout({
+  breadcrumbs,
+  history,
+  children,
+}: LayoutProps) {
   return (
     <ScrollView width={1200} className={'p-5'}>
-      {breadcrumbs}
+      {history}
 
-      {header}
+      {breadcrumbs}
 
       {children}
     </ScrollView>

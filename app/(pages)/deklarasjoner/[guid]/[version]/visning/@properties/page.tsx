@@ -11,7 +11,23 @@ export default function Properties() {
     <>
       <AccordionField
         title="Fysiske egenskaper ved 20°"
-        value={data?.avfall?.konsistenser?.join(', ')}
+        value={
+          data?.korreksjon?.avfall?.konsistenser?.toString() ===
+          data?.avfall?.konsistenser?.toString()
+            ? data?.avfall?.konsistenser?.join(', ')
+            : data?.korreksjon?.avfall?.konsistenser?.join(', ')
+        }
+        corrections={
+          data?.korreksjon?.avfall?.konsistenser?.toString() !==
+          data?.avfall?.konsistenser?.toString()
+            ? [
+                {
+                  key: 'Fysiske egenskaper ved 20°',
+                  value: data?.avfall?.konsistenser?.join(', '),
+                },
+              ]
+            : []
+        }
       />
       <AccordionField
         title="Inneholder tungmetaller"
@@ -67,7 +83,21 @@ export default function Properties() {
       />
       <AccordionField
         title="Nærmere beskrivelser"
-        value={data?.avfall?.kommentar}
+        value={
+          data?.korreksjon?.avfall?.kommentar !== data?.avfall?.kommentar
+            ? data?.korreksjon?.avfall?.kommentar
+            : data?.avfall?.kommentar
+        }
+        corrections={
+          data?.korreksjon?.avfall?.kommentar !== data?.avfall?.kommentar
+            ? [
+                {
+                  key: 'Fysiske egenskaper ved 20°',
+                  value: data?.avfall?.kommentar ?? undefined,
+                },
+              ]
+            : []
+        }
       />
     </>
   );

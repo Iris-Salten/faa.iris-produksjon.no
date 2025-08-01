@@ -35,5 +35,36 @@ export async function GET(req: Request, { params }: Params) {
     )
     .then((response) => response.data);
 
-  return NextResponse.json({ ...deklarasjon, kolli });
+  let korreksjon_kolli;
+  let korreksjon;
+  if (deklarasjon?.versjon !== 1) {
+    korreksjon = await axios
+      .get(
+        process.env.API_BASE_URL + '/deklarasjoner/' + guid + '?versjon=' + 1,
+        {
+          headers: {
+            Cookie: `Avdekl.Cookie=${process.env.API_AUTH_KEY}`,
+          },
+        },
+      )
+      .then((response) => response.data);
+
+    korreksjon_kolli = await axios
+      .get(
+        process.env.API_BASE_URL +
+          `/Transport/${korreksjon?.transport?.id}/kolli`,
+        {
+          headers: {
+            Cookie: `Avdekl.Cookie=${process.env.API_AUTH_KEY}`,
+          },
+        },
+      )
+      .then((response) => response.data);
+  }
+
+  return NextResponse.json({
+    ...deklarasjon,
+    kolli,
+    korreksjon: korreksjon ? { ...korreksjon, kolli: korreksjon_kolli } : null,
+  });
 }
