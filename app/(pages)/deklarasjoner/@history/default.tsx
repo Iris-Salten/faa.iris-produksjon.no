@@ -54,7 +54,7 @@ export default function HistoryModal() {
         <ModalHeader>Historikk</ModalHeader>
         <ModalBody>
           {error && (
-            <div className="flex flex-col w-full items-center gap-15">
+            <div className="flex flex-col w-full items-center gap-15-">
               <img
                 className="h-[225px] flex pt-4"
                 src="/svg/undraw_timeline_2gfy.svg"

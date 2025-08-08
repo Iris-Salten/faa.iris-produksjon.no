@@ -14,7 +14,7 @@ export default function Layout({
   children,
 }: LayoutProps) {
   return (
-    <ScrollView width={1200} className={'p-5'}>
+    <ScrollView width={1400} className={'p-5'}>
       {history}
 
       {breadcrumbs}
