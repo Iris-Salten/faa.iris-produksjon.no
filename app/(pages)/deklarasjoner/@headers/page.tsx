@@ -56,7 +56,7 @@ export default function PageHeader() {
   return (
     <span className="flex flex-col w-full justify-between gap-3">
       <Breadcrumbs>
-        <BreadcrumbItem>Hjem</BreadcrumbItem>
+        <BreadcrumbItem href="/">Hjem</BreadcrumbItem>
         <BreadcrumbItem>Deklarasjoner</BreadcrumbItem>
       </Breadcrumbs>
 
